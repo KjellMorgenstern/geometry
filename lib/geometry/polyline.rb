@@ -362,7 +362,7 @@ also like a {Path} in that it isn't necessarily closed.
     # @return [Edge]    the popped {Edge}
     def pop_edge
       old = @edges.pop # Remove the last Edge
-      if 0 == @edges.length # Remove all vertices if the only Edge was popped
+      if @edges.empty? # Remove all vertices if the only Edge was popped
         @vertices.clear
       elsif old.last == @vertices.last # Remove the last vertex if it was used by the popped Edge
         @vertices.pop

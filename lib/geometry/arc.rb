@@ -134,14 +134,14 @@ An {Arc} with its center at [1,1] and a radius of 2 that starts at the X-axis an
 
         a = range.map do |q|
           case q
-            when 1 then
-              self.center + Point[0, radius]
-            when 2 then
-              self.center + Point[-radius, 0]
-            when 3 then
-              self.center + Point[0, -radius]
-            when 4 then
-              self.center + Point[radius, 0]
+          when 1 then
+            self.center + Point[0, radius]
+          when 2 then
+            self.center + Point[-radius, 0]
+          when 3 then
+            self.center + Point[0, -radius]
+          when 4 then
+            self.center + Point[radius, 0]
           end
         end.push(*a)
         a.reduce([a.first, a.first]) { |memo, e| [memo.first.min(e), memo.last.max(e)] }

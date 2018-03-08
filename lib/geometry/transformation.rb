@@ -54,16 +54,16 @@ system's X-axis:
       @dimensions = options[:dimensions] || nil
 
       rotation_options = options.select { |key, value| [:angle, :x, :y, :z].include? key }
-      @rotation        = options[:rotate] || rotate || ((rotation_options.size > 0) ? Geometry::Rotation.new(rotation_options) : nil)
+      @rotation        = options[:rotate] || rotate || (!rotation_options.empty? ? Geometry::Rotation.new(rotation_options) : nil)
       @scale           = options[:scale] || scale
 
       case options.count { |k, v| [:move, :origin, :translate].include? k }
-        when 0
-          @translation = translate
-        when 1
-          @translation = (options[:translate] ||= options.delete(:move) || options.delete(:origin))
-        else
-          raise ArgumentError, "Too many translation parameters in #{options}"
+      when 0
+        @translation = translate
+      when 1
+        @translation = (options[:translate] ||= options.delete(:move) || options.delete(:origin))
+      else
+        raise ArgumentError, "Too many translation parameters in #{options}"
       end
 
       raise ArgumentError, "Bad translation" if @translation.is_a? Hash
@@ -130,21 +130,21 @@ system's X-axis:
       return self.clone unless other
 
       case other
-        when Array, Vector
-          if @translation
-            Transformation.new(@translation + other, @rotation, @scale)
-          else
-            Transformation.new(other, @rotation, @scale)
-          end
-        when Composition
-          Composition.new(self, *other.transformations)
-        when Transformation
-          if @rotation || other.rotation
-            Composition.new(self, other)
-          else
-            translation = @translation ? (@translation + other.translation) : other.translation
-            Transformation.new(translation, @rotation, @scale)
-          end
+      when Array, Vector
+        if @translation
+          Transformation.new(@translation + other, @rotation, @scale)
+        else
+          Transformation.new(other, @rotation, @scale)
+        end
+      when Composition
+        Composition.new(self, *other.transformations)
+      when Transformation
+        if @rotation || other.rotation
+          Composition.new(self, other)
+        else
+          translation = @translation ? (@translation + other.translation) : other.translation
+          Transformation.new(translation, @rotation, @scale)
+        end
       end
     end
 
@@ -152,24 +152,24 @@ system's X-axis:
       return self.clone unless other
 
       case other
-        when Array, Vector
-          if @translation
-            Transformation.new(@translation - other, @rotation, @scale)
-          else
-            Transformation.new(other.map { |e| -e }, @rotation, @scale)
-          end
-        when Transformation
-          if @rotation
-            rotation = other.rotation ? (@rotation - other.rotation) : @rotation
-          elsif other.rotation
-            rotation = -other.rotation
-          else
-            rotation = nil
-          end
+      when Array, Vector
+        if @translation
+          Transformation.new(@translation - other, @rotation, @scale)
+        else
+          Transformation.new(other.map { |e| -e }, @rotation, @scale)
+        end
+      when Transformation
+        if @rotation
+          rotation = other.rotation ? (@rotation - other.rotation) : @rotation
+        elsif other.rotation
+          rotation = -other.rotation
+        else
+          rotation = nil
+        end
 
-          translation = @translation ? (@translation - other.translation) : -other.translation
+        translation = @translation ? (@translation - other.translation) : -other.translation
 
-          Transformation.new(translation, rotation, @scale)
+        Transformation.new(translation, rotation, @scale)
       end
     end
 

@@ -59,7 +59,7 @@ A generalized representation of a rotation transformation.
 
         raise ArgumentError, "Dimensionality mismatch" unless all_axes_options.first.size <= @dimensions
         if all_axes_options.first.size < @dimensions
-          @x, @y, @z = [@x, @y, @z].map { |a| (a && (a.size != 0) && (a.size < @dimensions)) ? Array.new(@dimensions) { |i| a[i] || 0 } : a }
+          @x, @y, @z = [@x, @y, @z].map { |a| (a && !a.empty? && (a.size < @dimensions)) ? Array.new(@dimensions) { |i| a[i] || 0 } : a }
         end
 
         raise ArgumentError, "Too many axes specified (expected #{@dimensions - 1} but got #{all_axes_options.size}" unless all_axes_options.size == (@dimensions - 1)
@@ -137,10 +137,10 @@ A generalized representation of a rotation transformation.
 
     def eql?(other)
       case other
-        when RotationAngle then
-          angle.eql? other.angle
-        else
-          false
+      when RotationAngle then
+        angle.eql? other.angle
+      else
+        false
       end
     end
 
@@ -177,19 +177,19 @@ A generalized representation of a rotation transformation.
 
     def +(other)
       case other
-        when RotationAngle
-          RotationAngle.new(angle + other.angle)
-        else
-          raise TypeError, "Can't compose a #{self.class} with a #{other.class}"
+      when RotationAngle
+        RotationAngle.new(angle + other.angle)
+      else
+        raise TypeError, "Can't compose a #{self.class} with a #{other.class}"
       end
     end
 
     def -(other)
       case other
-        when RotationAngle
-          RotationAngle.new(angle - other.angle)
-        else
-          raise TypeError, "Can't subtract #{other.class} from #{self.class}"
+      when RotationAngle
+        RotationAngle.new(angle - other.angle)
+      else
+        raise TypeError, "Can't subtract #{other.class} from #{self.class}"
       end
     end
     # @endgroup

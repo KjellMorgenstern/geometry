@@ -116,7 +116,7 @@ describe Geometry::PointIso do
 
     it 'must return an Array when adding an array' do
       (subject + [5, 6]).must_equal [iso_value + 5, iso_value + 6]
-#	    ([5,6] + subject).must_equal [10, 11]
+      #	    ([5,6] + subject).must_equal [10, 11]
     end
 
     it 'must return a Point when adding a Size' do
@@ -137,7 +137,7 @@ describe Geometry::PointIso do
 
       it 'must return a Point when subtracting an array' do
         (subject - [5, 6]).must_equal [0, -1]
-#		([5,6] - subject).must_equal [4,5]
+        #		([5,6] - subject).must_equal [4,5]
       end
 
       it 'must return a Point when subtracting a Size' do

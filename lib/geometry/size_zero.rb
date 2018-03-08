@@ -31,9 +31,9 @@ everything else, regardless of dimensionality. You can think of it as an applica
       end
     end
 
-# @group Arithmetic
+    # @group Arithmetic
 
-# @group Unary operators
+    # @group Unary operators
     def +@
       self
     end
@@ -42,7 +42,7 @@ everything else, regardless of dimensionality. You can think of it as an applica
       self
     end
 
-# @endgroup
+    # @endgroup
 
     def +(other)
       other
@@ -66,16 +66,15 @@ everything else, regardless of dimensionality. You can think of it as an applica
       self
     end
 
-# @endgroup
+    # @endgroup
 
-# @group Enumerable
+    # @group Enumerable
 
-# Return the first, or first n, elements (always 0)
-# @param n [Number]	the number of elements to return
+    # Return the first, or first n, elements (always 0)
+    # @param n [Number]	the number of elements to return
     def first(n = nil)
       Array.new(n, 0) rescue 0
     end
     # @endgroup
   end
 end
-

@@ -134,12 +134,12 @@ everything else, regardless of size. You can think of it as an application of th
 
     def +(other)
       case other
-        when Array then
-          other
-        when Numeric
-          Point.iso(other)
-        else
-          Point[other]
+      when Array then
+        other
+      when Numeric
+        Point.iso(other)
+      else
+        Point[other]
       end
     end
 
@@ -177,4 +177,3 @@ everything else, regardless of size. You can think of it as an application of th
     # @endgroup
   end
 end
-

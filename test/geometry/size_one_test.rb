@@ -17,7 +17,7 @@ describe Geometry::SizeOne do
 
     it 'must have unary negation' do
       (-one).must_be :eql?, -1
-#	    (-one).must_be_instance_of(Geometry::SizeOne)
+      #	    (-one).must_be_instance_of(Geometry::SizeOne)
     end
 
     it 'must add a number' do
@@ -32,7 +32,7 @@ describe Geometry::SizeOne do
 
     it 'must return a Size when adding an array' do
       (one + [5, 6]).must_equal [6, 7]
-#	    ([5,6] + one).must_equal [6,7]
+      #	    ([5,6] + one).must_equal [6,7]
     end
 
     describe 'when subtracting' do
@@ -48,7 +48,7 @@ describe Geometry::SizeOne do
 
       it 'must return a Size when subtracting an array' do
         (one - [5, 6]).must_equal [-4, -5]
-#		([5,6] - one).must_equal [6,7]
+        #		([5,6] - one).must_equal [6,7]
       end
     end
 

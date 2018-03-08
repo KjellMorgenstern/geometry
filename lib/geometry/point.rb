@@ -102,14 +102,14 @@ geometry class (x, y, z).
 
     def coerce(other)
       case other
-        when Array then
-          [Point[*other], self]
-        when Numeric then
-          [Point[Array.new(self.size, other)], self]
-        when Vector then
-          [Point[*other], self]
-        else
-          raise TypeError, "#{self.class} can't be coerced into #{other.class}"
+      when Array then
+        [Point[*other], self]
+      when Numeric then
+        [Point[Array.new(self.size, other)], self]
+      when Vector then
+        [Point[*other], self]
+      else
+        raise TypeError, "#{self.class} can't be coerced into #{other.class}"
       end
     end
 
@@ -133,14 +133,14 @@ geometry class (x, y, z).
       else
         args = args.first if 1 == args.size
         case args
-          when PointIso then
-            self.class[@elements.map { |e| [e, args.value].max }]
-          when PointOne then
-            self.class[@elements.map { |e| [e, 1].max }]
-          when PointZero then
-            self.class[@elements.map { |e| [e, 0].max }]
-          else
-            self.class[@elements.zip(args).map(&:max)]
+        when PointIso then
+          self.class[@elements.map { |e| [e, args.value].max }]
+        when PointOne then
+          self.class[@elements.map { |e| [e, 1].max }]
+        when PointZero then
+          self.class[@elements.map { |e| [e, 0].max }]
+        else
+          self.class[@elements.zip(args).map(&:max)]
         end
       end
     end
@@ -155,14 +155,14 @@ geometry class (x, y, z).
       else
         args = args.first if 1 == args.size
         case args
-          when PointIso then
-            self.class[@elements.map { |e| [e, args.value].min }]
-          when PointOne then
-            self.class[@elements.map { |e| [e, 1].min }]
-          when PointZero then
-            self.class[@elements.map { |e| [e, 0].min }]
-          else
-            self.class[@elements.zip(args).map(&:min)]
+        when PointIso then
+          self.class[@elements.map { |e| [e, args.value].min }]
+        when PointOne then
+          self.class[@elements.map { |e| [e, 1].min }]
+        when PointZero then
+          self.class[@elements.map { |e| [e, 0].min }]
+        else
+          self.class[@elements.zip(args).map(&:min)]
         end
       end
     end
@@ -261,65 +261,65 @@ geometry class (x, y, z).
 
     def +(other)
       case other
-        when Numeric
-          Point[@elements.map { |e| e + other }]
-        when PointIso
-          value = other.value
-          Point[@elements.map { |e| e + value }]
-        when PointOne
-          Point[@elements.map { |e| e + 1 }]
-        when PointZero, NilClass
-          self.dup
-        else
-          raise OperationNotDefined, "#{other.class} must respond to :size and :[]" unless other.respond_to?(:size) && other.respond_to?(:[])
-          raise DimensionMismatch, "Can't add #{other} to #{self}" if size != other.size
-          Point[Array.new(size) { |i| @elements[i] + other[i] }]
+      when Numeric
+        Point[@elements.map { |e| e + other }]
+      when PointIso
+        value = other.value
+        Point[@elements.map { |e| e + value }]
+      when PointOne
+        Point[@elements.map { |e| e + 1 }]
+      when PointZero, NilClass
+        self.dup
+      else
+        raise OperationNotDefined, "#{other.class} must respond to :size and :[]" unless other.respond_to?(:size) && other.respond_to?(:[])
+        raise DimensionMismatch, "Can't add #{other} to #{self}" if size != other.size
+        Point[Array.new(size) { |i| @elements[i] + other[i] }]
       end
     end
 
     def -(other)
       case other
-        when Numeric
-          Point[@elements.map { |e| e - other }]
-        when PointIso
-          value = other.value
-          Point[@elements.map { |e| e - value }]
-        when PointOne
-          Point[@elements.map { |e| e - 1 }]
-        when PointZero, NilClass
-          self.dup
-        else
-          raise OperationNotDefined, "#{other.class} must respond to :size and :[]" unless other.respond_to?(:size) && other.respond_to?(:[])
-          raise DimensionMismatch, "Can't subtract #{other} from #{self}" if size != other.size
-          Point[Array.new(size) { |i| @elements[i] - other[i] }]
+      when Numeric
+        Point[@elements.map { |e| e - other }]
+      when PointIso
+        value = other.value
+        Point[@elements.map { |e| e - value }]
+      when PointOne
+        Point[@elements.map { |e| e - 1 }]
+      when PointZero, NilClass
+        self.dup
+      else
+        raise OperationNotDefined, "#{other.class} must respond to :size and :[]" unless other.respond_to?(:size) && other.respond_to?(:[])
+        raise DimensionMismatch, "Can't subtract #{other} from #{self}" if size != other.size
+        Point[Array.new(size) { |i| @elements[i] - other[i] }]
       end
     end
 
     def *(other)
       case other
-        when NilClass
-          nil
-        when Numeric
-          Point[@elements.map { |e| e * other }]
-        when PointZero
-          Point.zero
+      when NilClass
+        nil
+      when Numeric
+        Point[@elements.map { |e| e * other }]
+      when PointZero
+        Point.zero
+      else
+        if other.respond_to?(:[])
+          raise OperationNotDefined, "#{other.class} must respond to :size" unless other.respond_to?(:size)
+          raise DimensionMismatch, "Can't multiply #{self} by #{other}" if size != other.size
+          Point[Array.new(size) { |i| @elements[i] * other[i] }]
         else
-          if other.respond_to?(:[])
-            raise OperationNotDefined, "#{other.class} must respond to :size" unless other.respond_to?(:size)
-            raise DimensionMismatch, "Can't multiply #{self} by #{other}" if size != other.size
-            Point[Array.new(size) { |i| @elements[i] * other[i] }]
-          else
-            Point[@elements.map { |e| e * other }]
-          end
+          Point[@elements.map { |e| e * other }]
+        end
       end
     end
 
     def /(other)
       case other
-        when Matrix, Vector, Point, Size, NilClass, PointZero, SizeZero
-          raise OperationNotDefined, "Can't divide #{self} by #{other}"
-        else
-          Point[@elements.map { |e| e / other }]
+      when Matrix, Vector, Point, Size, NilClass, PointZero, SizeZero
+        raise OperationNotDefined, "Can't divide #{self} by #{other}"
+      else
+        Point[@elements.map { |e| e / other }]
       end
     end
     # @endgroup

@@ -133,16 +133,16 @@ Supports two-point, slope-intercept, and point-slope initializer forms
     # Two {PointSlopeLine}s are equal if both have equal slope and origin
     def ==(other)
       case other
-        when SlopeInterceptLine
-          # Check that the slopes are equal and that the starting point will solve the slope-intercept equation
-          (slope == other.slope) && (point.y == other.slope * point.x + other.intercept)
-        when TwoPointLine
-          # Plug both of other's endpoints into the line equation and check that they solve it
-          first_diff = other.first - point
-          last_diff  = other.last - point
-          (first_diff.y == slope * first_diff.x) && (last_diff.y == slope * last_diff.x)
-        else
-          self.eql? other
+      when SlopeInterceptLine
+        # Check that the slopes are equal and that the starting point will solve the slope-intercept equation
+        (slope == other.slope) && (point.y == other.slope * point.x + other.intercept)
+      when TwoPointLine
+        # Plug both of other's endpoints into the line equation and check that they solve it
+        first_diff = other.first - point
+        last_diff = other.last - point
+        (first_diff.y == slope * first_diff.x) && (last_diff.y == slope * last_diff.x)
+      else
+        self.eql? other
       end
     end
 
@@ -161,10 +161,10 @@ Supports two-point, slope-intercept, and point-slope initializer forms
     # @return [Number]  the location of the intercept
     def intercept(axis = :y)
       case axis
-        when :x
-          vertical? ? point.x : (horizontal? ? nil : (slope * point.x - point.y))
-        when :y
-          vertical? ? nil : (horizontal? ? point.y : (point.y - slope * point.x))
+      when :x
+        vertical? ? point.x : (horizontal? ? nil : (slope * point.x - point.y))
+      when :y
+        vertical? ? nil : (horizontal? ? point.y : (point.y - slope * point.x))
       end
     end
   end
@@ -183,14 +183,14 @@ Supports two-point, slope-intercept, and point-slope initializer forms
     # Two {SlopeInterceptLine}s are equal if both have equal slope and intercept
     def ==(other)
       case other
-        when PointSlopeLine
-          # Check that the slopes are equal and that the starting point will solve the slope-intercept equation
-          (slope == other.slope) && (other.point.y == slope * other.point.x + intercept)
-        when TwoPointLine
-          # Check that both endpoints solve the line equation
-          ((other.first.y == slope * other.first.x + intercept)) && (other.last.y == (slope * other.last.x + intercept))
-        else
-          self.eql? other
+      when PointSlopeLine
+        # Check that the slopes are equal and that the starting point will solve the slope-intercept equation
+        (slope == other.slope) && (other.point.y == slope * other.point.x + intercept)
+      when TwoPointLine
+        # Check that both endpoints solve the line equation
+        ((other.first.y == slope * other.first.x + intercept)) && (other.last.y == (slope * other.last.x + intercept))
+      else
+        self.eql? other
       end
     end
 
@@ -205,10 +205,10 @@ Supports two-point, slope-intercept, and point-slope initializer forms
     # @return [Number]  the location of the intercept
     def intercept(axis = :y)
       case axis
-        when :x
-          vertical? ? @intercept : (horizontal? ? nil : (-@intercept / @slope))
-        when :y
-          vertical? ? nil : @intercept
+      when :x
+        vertical? ? @intercept : (horizontal? ? nil : (-@intercept / @slope))
+      when :y
+        vertical? ? nil : @intercept
       end
     end
 
@@ -243,16 +243,16 @@ Supports two-point, slope-intercept, and point-slope initializer forms
     # Two {TwoPointLine}s are equal if both have equal {Point}s in the same order
     def ==(other)
       case other
-        when PointSlopeLine
-          # Plug both endpoints into the line equation and check that they solve it
-          first_diff = first - other.point
-          last_diff  = last - other.point
-          (first_diff.y == other.slope * first_diff.x) && (last_diff.y == other.slope * last_diff.x)
-        when SlopeInterceptLine
-          # Check that both endpoints solve the line equation
-          ((first.y == other.slope * first.x + other.intercept)) && (last.y == (other.slope * last.x + other.intercept))
-        else
-          self.eql?(other) || ((first == other.last) && (last == other.first))
+      when PointSlopeLine
+        # Plug both endpoints into the line equation and check that they solve it
+        first_diff = first - other.point
+        last_diff = last - other.point
+        (first_diff.y == other.slope * first_diff.x) && (last_diff.y == other.slope * last_diff.x)
+      when SlopeInterceptLine
+        # Check that both endpoints solve the line equation
+        ((first.y == other.slope * first.x + other.intercept)) && (last.y == (other.slope * last.x + other.intercept))
+      else
+        self.eql?(other) || ((first == other.last) && (last == other.first))
       end
     end
 
@@ -282,14 +282,13 @@ Supports two-point, slope-intercept, and point-slope initializer forms
     # @return [Number]  the location of the intercept
     def intercept(axis = :y)
       case axis
-        when :x
-          vertical? ? first.x : (horizontal? ? nil : (first.x - first.y / slope))
-        when :y
-          vertical? ? nil : (horizontal? ? first.y : (first.y - slope * first.x))
+      when :x
+        vertical? ? first.x : (horizontal? ? nil : (first.x - first.y / slope))
+      when :y
+        vertical? ? nil : (horizontal? ? first.y : (first.y - slope * first.x))
       end
     end
 
     # @endgroup
   end
 end
-

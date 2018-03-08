@@ -39,22 +39,22 @@ The {Obround} class cluster represents a rectangle with semicircular end caps
     #   @return [Obround]
     def self.new(*args)
       case args.size
-        when 1
-          CenteredObround.new(args[0])
-        when 2
-          if args.all? { |a| a.is_a?(Numeric) }
-            CenteredObround.new(Size[*args])
-          elsif args.all? { |a| a.is_a?(Array) || a.is_a?(Point) }
-            original_new(*args)
-          elsif (args[0].is_a?(Point) or args[0].is_a?(Array)) and args[1].is_a?(Size)
-            SizedObround.new(*args)
-          else
-            raise ArgumentError, "Invalid arguments #{args}"
-          end
-        when 4
-          raise ArgumentError unless args.all? { |a| a.is_a?(Numeric) }
-          left, bottom, right, top = *args
-          original_new(Point[left, bottom], Point[right, top])
+      when 1
+        CenteredObround.new(args[0])
+      when 2
+        if args.all? { |a| a.is_a?(Numeric) }
+          CenteredObround.new(Size[*args])
+        elsif args.all? { |a| a.is_a?(Array) || a.is_a?(Point) }
+          original_new(*args)
+        elsif (args[0].is_a?(Point) or args[0].is_a?(Array)) and args[1].is_a?(Size)
+          SizedObround.new(*args)
+        else
+          raise ArgumentError, "Invalid arguments #{args}"
+        end
+      when 4
+        raise ArgumentError unless args.all? { |a| a.is_a?(Numeric) }
+        left, bottom, right, top = *args
+        original_new(Point[left, bottom], Point[right, top])
       end
     end
 
@@ -120,7 +120,7 @@ The {Obround} class cluster represents a rectangle with semicircular end caps
       min, max = @points.minmax { |a, b| a.x <=> b.x }
       max.x - min.x
     end
-# @endgroup
+    # @endgroup
   end
 
   class CenteredObround < Obround

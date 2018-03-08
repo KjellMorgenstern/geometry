@@ -58,14 +58,14 @@ methods (width, height and depth).
 
     def coerce(other)
       case other
-        when Array then
-          [Size[*other], self]
-        when Numeric then
-          [Size[Array.new(self.size, other)], self]
-        when Vector then
-          [Size[*other], self]
-        else
-          raise TypeError, "#{self.class} can't be coerced into #{other.class}"
+      when Array then
+        [Size[*other], self]
+      when Numeric then
+        [Size[Array.new(self.size, other)], self]
+      when Vector then
+        [Size[*other], self]
+      else
+        raise TypeError, "#{self.class} can't be coerced into #{other.class}"
       end
     end
 

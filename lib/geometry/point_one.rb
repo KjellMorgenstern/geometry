@@ -133,16 +133,16 @@ everything else, regardless of size. It's similar to the
 
     def +(other)
       case other
-        when Numeric
-          Point.iso(other + 1)
-        when Size
-          Point[other.map { |a| a + 1 }]
+      when Numeric
+        Point.iso(other + 1)
+      when Size
+        Point[other.map { |a| a + 1 }]
+      else
+        if other.respond_to?(:map)
+          other.map { |a| a + 1 }
         else
-          if other.respond_to?(:map)
-            other.map { |a| a + 1 }
-          else
-            Point[other + 1]
-          end
+          Point[other + 1]
+        end
       end
     end
 
@@ -181,4 +181,3 @@ everything else, regardless of size. It's similar to the
     # @endgroup
   end
 end
-

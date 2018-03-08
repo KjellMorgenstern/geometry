@@ -28,12 +28,12 @@ describe Geometry::SizeZero do
 
       it "return a Size when adding two Sizes" do
         (zero + right).must_be_kind_of Size
-#		(left + zero).must_be_kind_of Size
+        #		(left + zero).must_be_kind_of Size
       end
 
       it "must return a Size when adding an array" do
         (zero + [5, 6]).must_equal [5, 6]
-#		([5,6] + zero).must_equal [5,6]
+        #		([5,6] + zero).must_equal [5,6]
       end
     end
 
@@ -50,7 +50,7 @@ describe Geometry::SizeZero do
 
       it "must return a Size when subtracting an array" do
         (zero - [5, 6]).must_equal [-5, -6]
-#		([5,6] - zero).must_equal [5,6]
+        #		([5,6] - zero).must_equal [5,6]
       end
     end
 

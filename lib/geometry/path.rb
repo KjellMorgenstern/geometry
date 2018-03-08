@@ -22,36 +22,36 @@ An object representing a set of connected elements, each of which could be an
 
       args.reduce(first) do |previous, n|
         case n
+        when Point
+          case previous
+          when Point then
+            push Edge.new(previous, n)
+          when Arc, Edge then
+            push Edge.new(previous.last, n) unless previous.last == n
+          end
+          last
+        when Edge
+          case previous
+          when Point then
+            push Edge.new(previous, n.first)
+          when Arc, Edge then
+            push Edge.new(previous.last, n.first) unless previous.last == n.first
+          end
+          push(n).last
+        when Arc
+          case previous
           when Point
-            case previous
-              when Point then
-                push Edge.new(previous, n)
-              when Arc, Edge then
-                push Edge.new(previous.last, n) unless previous.last == n
+            if previous == n.first
+              raise ArgumentError, "Duplicated point before an Arc"
+            else
+              push Edge.new(previous, n.first)
             end
-            last
-          when Edge
-            case previous
-              when Point then
-                push Edge.new(previous, n.first)
-              when Arc, Edge then
-                push Edge.new(previous.last, n.first) unless previous.last == n.first
-            end
-            push(n).last
-          when Arc
-            case previous
-              when Point
-                if previous == n.first
-                  raise ArgumentError, "Duplicated point before an Arc"
-                else
-                  push Edge.new(previous, n.first)
-                end
-              when Arc, Edge
-                push Edge.new(previous.last, n.first) unless previous.last == n.first
-            end
-            push(n).last
-          else
-            raise ArgumentError, "Unsupported argument type: #{n}"
+          when Arc, Edge
+            push Edge.new(previous.last, n.first) unless previous.last == n.first
+          end
+          push(n).last
+        else
+          raise ArgumentError, "Unsupported argument type: #{n}"
         end
       end
     end

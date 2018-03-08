@@ -98,7 +98,7 @@ Circles come in all shapes and sizes, but they're usually round.
     def minmax
       [self.min, self.max]
     end
-# @!endgroup
+    # @!endgroup
   end
 
   class CenterDiameterCircle < Circle

@@ -89,7 +89,7 @@ describe Geometry::PointOne do
 
     it 'must have unary negation' do
       (-one).must_be :eql?, -1
-#	    (-one).must_be_instance_of(Geometry::PointOne)
+      #	    (-one).must_be_instance_of(Geometry::PointOne)
     end
 
     describe 'Accessors' do
@@ -137,7 +137,7 @@ describe Geometry::PointOne do
 
       it 'must return a Point when subtracting an array' do
         (one - [5, 6]).must_equal [-4, -5]
-#		([5,6] - one).must_equal [4,5]
+        #		([5,6] - one).must_equal [4,5]
       end
 
       it 'must return a Point when subtracting a Size' do

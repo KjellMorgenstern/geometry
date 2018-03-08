@@ -31,9 +31,9 @@ everything else, regardless of dimensionality. It's similar to the
       end
     end
 
-# @group Arithmetic
+    # @group Arithmetic
 
-# @group Unary operators
+    # @group Unary operators
     def +@
       self
     end
@@ -42,7 +42,7 @@ everything else, regardless of dimensionality. It's similar to the
       -1
     end
 
-# @endgroup
+    # @endgroup
 
     def +(other)
       if other.respond_to?(:map)
@@ -73,16 +73,15 @@ everything else, regardless of dimensionality. It's similar to the
       1 / other
     end
 
-# @endgroup
+    # @endgroup
 
-# @group Enumerable
+    # @group Enumerable
 
-# Return the first, or first n, elements (always 0)
-# @param n [Number]	the number of elements to return
+    # Return the first, or first n, elements (always 0)
+    # @param n [Number]	the number of elements to return
     def first(n = nil)
       Array.new(n, 1) rescue 1
     end
     # @endgroup
   end
 end
-

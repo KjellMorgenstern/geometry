@@ -146,16 +146,16 @@ An object repesenting a N-dimensional {Point} with identical elements.
 
     def +(other)
       case other
-        when Numeric
-          other + @value
-        when Size
-          Point[other.map { |a| a + @value }]
+      when Numeric
+        other + @value
+      when Size
+        Point[other.map { |a| a + @value }]
+      else
+        if other.respond_to?(:map)
+          other.map { |a| a + @value }
         else
-          if other.respond_to?(:map)
-            other.map { |a| a + @value }
-          else
-            Point[other + @value]
-          end
+          Point[other + @value]
+        end
       end
     end
 
@@ -183,4 +183,3 @@ An object repesenting a N-dimensional {Point} with identical elements.
 
   end
 end
-
